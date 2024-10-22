@@ -3,13 +3,14 @@
 * Plugin name: Licenser Core
 * Plugin URL: http://www.licenser.com
 * Description: Este plugin es exclusivo para la administración y venta de licencias agencias que deseen usar licenser.
-* Version: 1.0.1
+* Version: 1.0.2
 * Author: KerackDiaz
 * Author URI: https://3mas1r.com
 * License: GPL2
 * License URL: https://www.gnu.org/licenses/gpl-2.0.html
 * Text Domain: licenser-core
-* woocommerce tested up to: 5.7.1
+* woocommerce tested up to: 9.3.3
+* Elementor tested up to: 3.24.7
 * @package licenser-core
 */
 
@@ -20,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('LC_VERSION')) {
-    define('LC_VERSION', '1.0.1');
+    define('LC_VERSION', '1.0.2');
 }
 
 /** Define las constantes antes de usarlas */
