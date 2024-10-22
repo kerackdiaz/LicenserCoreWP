@@ -50,6 +50,9 @@ include_once plugin_dir_path(__FILE__) . 'includes/register/create_form_page.php
 // Include the redirect on purchase file
 include_once plugin_dir_path(__FILE__) . 'includes/functions/redirect_on_purchase.php';
 
+// Include the updater file
+include_once plugin_dir_path(__FILE__) . 'includes/updater.php';
+
 if (!class_exists('Licenser_core')) {
     /**
      * Main Class start here
@@ -85,10 +88,6 @@ if (!class_exists('Licenser_core')) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_scripts')); // Enqueue frontend scripts
             add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'plugin_action_links')); // Add action links
             add_action('admin_init', array($this, 'register_settings')); // Register settings
-
-            // Agregar filtros para verificar actualizaciones
-            add_filter('pre_set_site_transient_update_plugins', array($this, 'check_for_update'));
-            add_filter('plugins_api', array($this, 'plugin_api_call'), 10, 3);
         }
 
         /**
@@ -96,7 +95,8 @@ if (!class_exists('Licenser_core')) {
          */
         public function plugin_action_links($links) {
             $settings_link = '<a href="admin.php?page=licenser-core">' . __('Settings', 'licenser-core') . '</a>';
-            array_unshift($links, $settings_link);
+            $update_link = '<a href="' . esc_url(add_query_arg('lc_check_update', '1', admin_url('plugins.php'))) . '">' . __('Check for Updates', 'licenser-core') . '</a>';
+            array_unshift($links, $settings_link, $update_link);
             return $links;
         }
 
@@ -167,24 +167,6 @@ if (!class_exists('Licenser_core')) {
             flush_rewrite_rules();
         }
 
-       /**
-         * Configurar el updater
-         */
-        private function setup_updater() {
-            $config = array(
-                'slug' => plugin_basename(__FILE__),
-                'proper_folder_name' => dirname(plugin_basename(__FILE__)),
-                'api_url' => 'https://api.github.com/repos/tu-usuario/tu-repositorio',
-                'raw_url' => 'https://raw.githubusercontent.com/tu-usuario/tu-repositorio/main',
-                'github_url' => 'https://github.com/tu-usuario/tu-repositorio',
-                'zip_url' => 'https://github.com/tu-usuario/tu-repositorio/archive/refs/heads/main.zip',
-                'sslverify' => true,
-                'access_token' => '', // Si tienes un token de acceso, agrégalo aquí
-            );
-
-            new \LicenserCore\Updater\Updater($config);
-        }
-
 
         // Encolar el archivo CSS para el frontend
         public function enqueue_frontend_styles() {
@@ -229,4 +211,24 @@ if (!class_exists('Licenser_core')) {
 // Instanciar la clase LicenserCart
 if (class_exists('LicenserCart')) {
     new LicenserCart();
+}
+
+// Agregar la función para comprobar actualizaciones
+add_action('admin_init', 'licenser_core_check_update');
+
+function licenser_core_check_update() {
+    if (isset($_GET['lc_check_update']) && $_GET['lc_check_update'] == '1') {
+        $update_plugins = get_site_transient('update_plugins');
+        $update_plugins = check_for_plugin_update($update_plugins);
+        set_site_transient('update_plugins', $update_plugins);
+        add_action('admin_notices', 'licenser_core_update_notice');
+    }
+}
+
+function licenser_core_update_notice() {
+    ?>
+    <div class="notice notice-success is-dismissible">
+        <p><?php esc_html_e('Update check completed.', 'licenser-core'); ?></p>
+    </div>
+    <?php
 }
