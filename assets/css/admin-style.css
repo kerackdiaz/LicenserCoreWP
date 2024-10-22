@@ -1,0 +1,32 @@
+/* Cambiar el color del icono SVG a blanco */
+#toplevel_page_licenser-core .wp-menu-image img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);
+}
+
+/* Estilos para las pestañas */
+.nav-tab-wrapper {
+    margin-bottom: 20px;
+}
+
+.nav-tab {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 5px;
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+.nav-tab-active {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+}
+
