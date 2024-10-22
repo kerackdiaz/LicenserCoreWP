@@ -3,7 +3,7 @@
 * Plugin name: Licenser Core
 * Plugin URL: http://www.licenser.com
 * Description: Este plugin es exclusivo para la administración y venta de licencias agencias que deseen usar licenser.
-* Version: 1.0.2
+* Version: 1.0.3
 * Author: KerackDiaz
 * Author URI: https://3mas1r.com
 * License: GPL2
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('LC_VERSION')) {
-    define('LC_VERSION', '1.0.2');
+    define('LC_VERSION', '1.0.3');
 }
 
 /** Define las constantes antes de usarlas */
@@ -222,6 +222,7 @@ function licenser_core_check_update() {
         $update_plugins = get_site_transient('update_plugins');
         $update_plugins = check_for_plugin_update($update_plugins);
         set_site_transient('update_plugins', $update_plugins);
+        wp_update_plugins(); // Forzar la actualización de plugins
         add_action('admin_notices', 'licenser_core_update_notice');
     }
 }
@@ -229,7 +230,18 @@ function licenser_core_check_update() {
 function licenser_core_update_notice() {
     ?>
     <div class="notice notice-success is-dismissible">
-        <p><?php esc_html_e('Update check completed.', 'licenser-core'); ?></p>
+        <p><?php esc_html_e('Update check completed. If an update is available, it will be installed shortly.', 'licenser-core'); ?></p>
     </div>
     <?php
+}
+
+
+function lc_log($message) {
+    if (WP_DEBUG === true) {
+        if (is_array($message) || is_object($message)) {
+            error_log(print_r($message, true));
+        } else {
+            error_log($message);
+        }
+    }
 }
