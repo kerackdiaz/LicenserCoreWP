@@ -2,10 +2,10 @@
 Contributors: kerackdiaz
 Donate link: http://www.licenser.com
 Tags: licensing, ecommerce, woocommerce, elementor
-Requires at least: 5.0
-Tested up to: 6.0
-Stable tag: 1.0.2
-Requires PHP: 7.2
+Requires at least: 6.0
+Tested up to: 6.6.2
+Stable tag: 1.0.4
+Requires PHP: 8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,8 @@ Licenser Core es un plugin diseñado para la administración y venta de licencia
 3. Usa el elemento de menú 'Licenser Core' para configurar el plugin.
 
 == Changelog ==
+= 1.0.4 =
+* Optimización del código y mejoras de rendimiento.
 
 = 1.0.3 =
 * Implementación de actualización remota desde GitHub.
@@ -45,6 +47,10 @@ Sí, el plugin es compatible con WooCommerce y Elementor.
 2. Ejemplo de uso del plugin en el frontend.
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+* Optimización del código y mejoras de rendimiento.
+
 
 = 1.0.2 =
 * Implementación de actualización remota desde GitHub.

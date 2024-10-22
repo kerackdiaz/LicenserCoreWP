@@ -41,7 +41,7 @@ function licenser_core_clients_page() {
     $companies = json_decode(wp_remote_retrieve_body($response), true);
 
     ?>
-    <div id="clients" class="tab-content" style="display: none;">
+    <div id="clients" class="wrap">
         <h2>Clients</h2>
         <table class="wp-list-table widefat fixed striped">
             <thead>
@@ -81,4 +81,3 @@ function licenser_core_clients_page() {
     </div>
     <?php
 }
-
